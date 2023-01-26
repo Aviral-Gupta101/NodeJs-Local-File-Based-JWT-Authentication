@@ -1,0 +1,25 @@
+.not_found{
+    color: red;
+    background-color: skyblue;
+}
+
+.index{
+    color: royalblue;
+    background-color: pink;
+}
+
+.home{
+    color: coral;
+    background-color: black;
+}
+
+.test{
+    background-color:crimson;
+    color: darkblue;
+
+}
+
+a{
+    color: darkblue;
+    font-size: 23px;
+}

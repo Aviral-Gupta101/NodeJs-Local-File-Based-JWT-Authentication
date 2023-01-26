@@ -1,0 +1,13 @@
+[
+    {
+        "id" : 1,
+        "name": "aviral",
+        "designation" : "CEO"
+    }, 
+
+    {
+        "id" : 2,
+        "name": "MSJP",
+        "designation" : "Chaprasi"
+    }
+]
