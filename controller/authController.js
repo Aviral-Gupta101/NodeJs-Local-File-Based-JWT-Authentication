@@ -4,6 +4,12 @@ const userDB = {
 }
 
 const bcrypt = require("bcrypt");
+const path = require("path");
+const fs = require("fs/promises");
+const jwt = require("jsonwebtoken");
+
+const userFile = path.join(__dirname, "..", "data", "user.json");
+
 
 const userLogin = async (req, res) => {
 
@@ -24,7 +30,27 @@ const userLogin = async (req, res) => {
             return res.status(401).json({"Message" : "Invalid username or password"});
         
         // TODO:Create JWT in future
-        return res.json({"Message" : "Login successful"});
+
+        const accessToken = jwt.sign(
+            {"username" : foundUser.username},
+            process.env.ACCESS_TOKEN,
+            {expiresIn : "30s"}
+        );
+
+        const refreshToken = jwt.sign(
+            {"username" : foundUser.username},
+            process.env.ACCESS_TOKEN,
+            {expiresIn : "1d"}
+        );
+
+        /* Saving token in file */
+        const otherUser = userDB.users.filter(i => i.username !== foundUser.username);
+        const currentUser = {...foundUser, refreshToken};
+        userDB.setUser([...otherUser, currentUser]);
+
+        await fs.writeFile(userFile, JSON.stringify(userDB.users));
+        res.cookie("jwt", refreshToken, {httpOnly: true, maxAge: 24*60*60*1000})
+        return res.json({accessToken});
 
     } catch (error) {
         console.error(error.message);

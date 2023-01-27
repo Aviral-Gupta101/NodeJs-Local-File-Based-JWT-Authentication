@@ -8,6 +8,9 @@ const errorHandler = require("./middleware/errorHandler");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+require("dotenv").config();
+
+
 // custom middleware
 app.use(logger);
 
@@ -48,3 +51,5 @@ app.use(errorHandler);
 app.listen(PORT, () => {
     console.log("Server started at http://localhost:" + PORT);
 });
+
+// 4:38
