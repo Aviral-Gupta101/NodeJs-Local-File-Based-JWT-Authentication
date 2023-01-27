@@ -25,6 +25,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 /* Routes */
 app.use("/", require("./routes/root"));
 app.use("/employee", require("./routes/api/employee"));
+app.use("/register", require("./routes/register"));
+app.use("/login", require("./routes/auth"));
 
 
 // uses all methods

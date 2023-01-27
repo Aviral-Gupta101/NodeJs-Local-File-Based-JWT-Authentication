@@ -5,7 +5,8 @@ const whiteList = ["https://yoursite.thatCanHitBackend.com", "http://localhost:3
 const corsOption = {
     origin : (origin, callback) => {
 
-        console.log(origin);
+        // FIXME: Uncomment me to see origin name
+        // console.log(origin);
 
         if(whiteList.indexOf(origin) !== -1 || !origin)
             callback(null, true);
