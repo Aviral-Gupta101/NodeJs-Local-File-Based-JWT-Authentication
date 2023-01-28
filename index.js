@@ -4,6 +4,8 @@ const cors = require("cors");
 const corsOption = require("./config/cors");
 const logger = require("./middleware/logger");
 const errorHandler = require("./middleware/errorHandler");
+const verifyJWT = require("./middleware/jwtVerify");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,6 +20,9 @@ app.use(logger);
 /* Cross origign resource sharing */
 app.use(cors(corsOption));
 
+/* Cokie Parser */
+app.use(cookieParser());
+
 
 /* BUILT IN MIDDLEWAREN */
 app.use(express.urlencoded({extended: false}));
@@ -27,9 +32,13 @@ app.use(express.static(path.join(__dirname, 'public')));
  
 /* Routes */
 app.use("/", require("./routes/root"));
-app.use("/employee", require("./routes/api/employee"));
 app.use("/register", require("./routes/register"));
 app.use("/login", require("./routes/auth"));
+app.use("/refresh", require("./routes/refresh"));
+app.use("/logout", require("./routes/logout"));
+
+app.use(verifyJWT);
+app.use("/employee", require("./routes/api/employee"));
 
 
 // uses all methods

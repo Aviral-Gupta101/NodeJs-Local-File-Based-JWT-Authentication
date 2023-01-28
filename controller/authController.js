@@ -39,9 +39,10 @@ const userLogin = async (req, res) => {
 
         const refreshToken = jwt.sign(
             {"username" : foundUser.username},
-            process.env.ACCESS_TOKEN,
+            process.env.REFRESH_TOKEN,
             {expiresIn : "1d"}
         );
+        
 
         /* Saving token in file */
         const otherUser = userDB.users.filter(i => i.username !== foundUser.username);
